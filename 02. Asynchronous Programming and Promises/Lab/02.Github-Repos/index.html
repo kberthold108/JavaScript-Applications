@@ -11,14 +11,9 @@
 
 <body>
     <label for="username">GitHub username:</label>
-    <input type="text" id="username"/>
-    <button onclick="loadRepos()">Load Repos</button>
+    <input type="text" id="username" value="kberthold108"/>
+    <button onclick="loadReposAsync()">Load Repos</button>
     <ul id="repos">
-        <li>
-            <a href="{repo.html_url}">
-                {repo.full_nAme}
-            </a>
-        </li>
     </ul>
 <script src="./scripts/app.js"></script>
 </body>
