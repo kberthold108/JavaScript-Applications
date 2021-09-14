@@ -17,7 +17,7 @@ function arrive() {
 }
 
 
-function depart() {
+function depart1() {
     fetch(`http://localhost:3030/jsonstore/bus/schedule/${nextId}`)
         .then(response => {
             if (response.textContent === "") {
@@ -37,5 +37,21 @@ function depart() {
             arriveButton.disabled = true;
             departButton.disabled = true;
         });
+}
+
+async function asyncDepart() {
+    try {
+        let next = await fetch(`http://localhost:3030/jsonstore/bus/schedule/${nextId}`);
+        next = await next.json();
+        arriveButton.disabled = false;
+        departButton.disabled = true;
+        curr = next.name;
+        info.textContent = `Next stop ${next.name}`;
+        nextId = next.next;
+    } catch (err) {
+        info.textContent = "Error";
+        arriveButton.disabled = true;
+        departButton.disabled = true;
+    }
 }
 
