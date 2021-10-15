@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Application 2020</title>
+    <link rel="icon" type="image/png" href="../static/favicon.ico">
+    <link href="./static/css/site.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script type="module" src="src/app.js"></script>
+</head>
+
+<body>
+
+    <div class="container" id="container">
+        <header id="header">
+
+        </header>
+
+        <main id="main">
+
+        </main>
+
+        <footer class="text-center">
+            <span>© Kenneth 20201</span>
+        </footer>
+    </div>
+
+
+
+    <div id="views" style="display: none;">
+        <div id="movieDescription" class="mt-4"></div>
+        <div id="homepage">
+            <div class="jumbotron jumbotron-fluid bg-dark" id="homepageMovies">
+                <img src="./static/img/cinema.jpg" alt="" width="100%" height="260px">
+                <h1 class="display-4 text-light">Movies</h2>
+                    <p class="text-light">Unlimeted movies, TV shows, and more. Watch anywhere Cancel anytime</p>
+            </div>
+            <div id="movies">
+                <h2 class="text-center">Movies</h2>
+                <button type="button" class="btn btn-warning" id="addNewMovieBtn">Add movie</button>
+            </div>
+        </div>
+
+        <div id="editMovie" class="border border-light p-2 text-center">
+            <h3 class=" text-center display-4 text-dark">Edit Movie</h3>
+            <form id="editMovieForm" class="border border-dark p-3 text-center">
+                <div class="form-group">
+                    <label>Movie Title</label>
+                    <input class="form-control" type="text" placeholder="Title" id="editTitle">
+                </div>
+                <div class="form-group">
+                    <label for="email">Description</label>
+                    <input class="form-control" type="text" placeholder="Description" id="editDescription">
+                </div>
+                <div class="form-group">
+                    <label for="email">Image URL</label>
+                    <input class="form-control" type="text" placeholder="Image URL" id="editImageURL">
+                </div>
+                <button type="submit" class="btn btn-primary" id="submitEditedMovie">Submit</button>
+            </form>
+        </div>
+
+        <div id="addNewMovie" class="border border-light p-2 text-center">
+            <h3 class=" text-center display-4 text-dark">Add Movie</h3>
+            <form id="addNewMovieForm" class="border border-dark p-3 text-center">
+                <div class="form-group">
+                    <label>Movie Title</label>
+                    <input class="form-control" type="text" placeholder="Title" id="title">
+                </div>
+                <div class="form-group">
+                    <label for="email">Description</label>
+                    <input class="form-control" type="text" placeholder="Description" id="description">
+                </div>
+                <div class="form-group">
+                    <label for="email">Image URL</label>
+                    <input class="form-control" type="text" placeholder="Image URL" id="imageURL">
+                </div>
+                <button type="submit" class="btn btn-primary" id="submitNewMovie">Submit</button>
+            </form>
+        </div>
+
+
+        <div class="border border-dark p-5" id="registerFormTemplate">
+            <form id="registerForm" class="border border-light p-2 text-center">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input class="form-control" type="email" placeholder="Email" id="email">
+                </div>
+                <div class="form-group">
+                    <label for="email">Password</label>
+                    <input class="form-control" type="email" placeholder="Password" id="password">
+                </div>
+                <div class="form-group">
+                    <label for="email">Repeat Password</label>
+                    <input class="form-control" type="email" placeholder="Repeat-Password" id="rePass">
+                </div>
+                <button type="submit" class="btn btn-primary" id="register">Register</button>
+            </form>
+        </div>
+
+        <div class="border border-dark p-5" id="loginFormTemplate">
+            <form id="registerForm" class="border border-light p-2 text-center">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input class="form-control" type="email" placeholder="Email" id="loginEmail">
+                </div>
+                <div class="form-group">
+                    <label for="email">Password</label>
+                    <input class="form-control" type="email" placeholder="Password" id="loginPassword">
+                </div>
+                <button type="submit" class="btn btn-primary" id="login">Register</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
