@@ -1,9 +1,9 @@
-import { movieDesc } from "./templates/movieDescriptionTemplate.js";
-import { getMovieById, checkIfLiked, getMovieLikes } from "./requests.js";
-import { removeMovie } from "./removeMovie.js";
+import { movieDesc } from "../../templates/movieDescriptionTemplate.js";
+import { getMovieById, checkIfLiked, getMovieLikes } from "../../utils/requests.js";
+import { removeMovie } from "../../utils/removeMovie.js";
 import { displayEdit } from "./editMovie.js";
-import { likeMovie } from "./likeMovie.js";
-import { changeBtn } from "./helper.js";
+import { likeMovie } from "../../utils/likeMovie.js";
+import { changeBtn } from "../../utils/helper.js";
 
 let main;
 let section;

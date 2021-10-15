@@ -1,5 +1,5 @@
-import { getMovieById, updateMovie } from "./requests.js";
-import { displayHomepage } from "./homepage.js";
+import { getMovieById, updateMovie } from "../../utils/requests.js";
+import { displayHomepage } from "../homepage/homepage.js";
 
 let main;
 let section;

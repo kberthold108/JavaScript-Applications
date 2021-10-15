@@ -1,4 +1,4 @@
-import { changeNavBar } from "../helper.js";
+import { changeNavBar } from "../utils/helper.js";
 
 export async function userAuth(email, password, type) {
     try {

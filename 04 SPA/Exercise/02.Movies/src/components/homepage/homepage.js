@@ -1,8 +1,8 @@
-import { applyNavBarFunctions } from "./helper.js";
-import { getAllMovies } from "./requests.js";
-import { getMoviesTemplate } from "./templates/movies.js";
-import { displayNewMovie } from "./newMovie.js";
-import { displaMovieDescription } from "./movieDescription.js";
+import { applyNavBarFunctions } from "../../utils/helper.js";
+import { getAllMovies } from "../../utils/requests.js";
+import { getMoviesTemplate } from "../../templates/movies.js";
+import { displayNewMovie } from "../movie/newMovie.js";
+import { displaMovieDescription } from "../movie/movieDescription.js";
 
 let main;
 let section;

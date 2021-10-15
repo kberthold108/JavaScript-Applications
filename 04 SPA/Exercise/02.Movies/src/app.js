@@ -1,10 +1,10 @@
 import { initializeRegisterComponent } from "./user/register.js";
 import { initializeLoginComponent } from "./user/login.js";
-import { initializeHomepageComponent, displayHomepage } from "./homepage.js";
-import { initializeNewMovieComponent } from "./newMovie.js";
-import { initializeMovieDescriptionComponent } from "./movieDescription.js";
-import { initializeEditComponent } from "./editMovie.js";
-import { changeNavBar, applyNavBarFunctions } from "./helper.js";
+import { initializeHomepageComponent, displayHomepage } from "./components/homepage/homepage.js";
+import { initializeNewMovieComponent } from "./components/movie/newMovie.js";
+import { initializeMovieDescriptionComponent } from "./components/movie/movieDescription.js";
+import { initializeEditComponent } from "./components/movie/editMovie.js";
+import { changeNavBar, applyNavBarFunctions } from "./utils/helper.js";
 
 
 

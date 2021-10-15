@@ -1,6 +1,6 @@
-import { clearForm, validateInput } from "../helper.js";
-import { userAuth } from "../requests.js";
-import { displayHomepage } from "../homepage.js";
+import { clearForm, validateInput } from "../utils/helper.js";
+import { userAuth } from "../utils/requests.js";
+import { displayHomepage } from "../components/homepage/homepage.js";
 let main;
 let section;
 function initializeLoginComponent(targetParent, targetSection) {

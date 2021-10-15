@@ -1,5 +1,5 @@
 import { deleteMovie } from "./requests.js";
-import { displayHomepage } from "./homepage.js";
+import { displayHomepage } from "../components/homepage/homepage.js";
 
 async function removeMovie(event) {
     event.preventDefault();

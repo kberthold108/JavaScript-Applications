@@ -1,5 +1,5 @@
-import { changeNavBar, applyNavBarFunctions } from "../helper.js";
-import { displayHomepage } from "../homepage.js";
+import { changeNavBar, applyNavBarFunctions } from "../utils/helper.js";
+import { displayHomepage } from "../components/homepage/homepage.js";
 
 function logout() {
     sessionStorage.removeItem("token");

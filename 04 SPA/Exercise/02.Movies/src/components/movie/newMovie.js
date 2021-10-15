@@ -1,6 +1,6 @@
-import { postMovie } from "./requests.js";
-import { clearForm, validateInput } from "./helper.js";
-import { displayHomepage } from "./homepage.js";
+import { postMovie } from "../../utils/requests.js";
+import { clearForm, validateInput } from "../../utils/helper.js";
+import { displayHomepage } from "../homepage/homepage.js";
 let main;
 let section;
 function initializeNewMovieComponent(targetParent, targetSection) {

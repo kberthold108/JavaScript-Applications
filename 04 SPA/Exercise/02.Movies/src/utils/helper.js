@@ -1,8 +1,8 @@
-import { initializeLogoutComponent } from "./user/logout.js";
-import { getNavigationTemplate } from "./templates/navigation.js";
-import { displayLogin } from "./user/login.js";
-import { displayRegister } from "./user/register.js";
-import { displayHomepage } from "./homepage.js";
+import { initializeLogoutComponent } from "../user/logout.js";
+import { getNavigationTemplate } from "../templates/navigation.js";
+import { displayLogin } from "../user/login.js";
+import { displayRegister } from "../user/register.js";
+import { displayHomepage } from "../components/homepage/homepage.js";
 
 function changeNavBar() {
     const header = document.querySelector("header");
