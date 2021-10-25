@@ -1,4 +1,4 @@
-import { displayCatalog } from "./catalog.js";
+// import { displayCatalog } from "./catalog.js";
 const displayMessage = (message) => alert(message);
 
 function redirect(fromUrl, toUrl) {

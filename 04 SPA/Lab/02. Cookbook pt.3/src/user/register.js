@@ -1,49 +1,35 @@
 import { desirializeForm, displayMessage } from "../helpers.js";
 import { login } from "./login.js";
-import { displayCatalog } from "../catalog.js";
+import { html } from "https://unpkg.com/lit-html?module";
+
 const registerUrl = "http://localhost:3030/users/register";
 
+const registerTemplate =  html`
+<section id="register">
+    <article>
+        <h2>Register</h2>
+        <form id="registerForm">
+            <label>E-mail: <input type="text" name="email"></label>
+            <label>Password: <input type="password" name="password"></label>
+            <label>Repeat: <input type="password" name="rePass"></label>
+            <input type="submit" value="Register">
+        </form>
+    </article>
+</section>`;
 
-function validateForm(formData) {
+export function setupRegister() {
+    return displayRegister;
 
-    if (formData.password !== formData.rePass) {
-        return false;
-    }
-
-    return true;
-}
-
-async function onSubmit(event) {
-    event.preventDefault();
-    const formData = desirializeForm(event.target);
-    if (!validateForm(formData)) {
-        displayMessage("Form not valid...");
-    }
-
-    const success = await login(registerUrl, formData);
-
-    if (success) {
-        displayCatalog();
+    function displayRegister() {
+        return registerTemplate;
     }
 }
+export async function onRegisterSubmit(data, onSuccess) {
+        if (data.password !== data.rePass) {
+            displayMessage("Form not valid...");
+        }
+        await login(registerUrl, {email: data.email, password: data.password});
+        onSuccess();
+    }
 
-let main;
-let section;
-let setNavActive;
 
-function initializeRegisterComponent(targetParent, targetSection, onNavChange) {
-    main = targetParent;
-    section = targetSection;
-    setNavActive = onNavChange;
-
-    const form = section.querySelector("form");
-    form.addEventListener("submit", onSubmit);
-}
-
-function displayRegister() {
-    setNavActive("registerLink");
-    main.innerHTML = "";
-    main.appendChild(section);
-}
-
-export { initializeRegisterComponent, displayRegister };

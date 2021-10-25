@@ -1,53 +1,18 @@
-
+import { getRecipeById } from "./catalog.js";
 import { desirializeForm, displayMessage } from "./helpers.js";
-let form;
-let id;
-function editRecipe(event) {
-    
-    const parent = event.target.parentNode;
+import { html, render } from "https://unpkg.com/lit-html?module";
 
-    const [ownerID, recipeID] = event.target.name.split(",");
-    id = recipeID;
-
-    if (ownerID !== sessionStorage.getItem("userID")) {
-        return;
-    }
-    displayEdit();
-    document.getElementsByName("name")[0].value = parent.getElementsByTagName("h2")[0].textContent;
-    document.getElementsByName("img")[0].value = parent.getElementsByTagName("img")[0].src;
-    const [ingret] = parent.getElementsByClassName("ingredients");
-    const [ul] = ingret.getElementsByTagName("ul");
-    console.log(document.getElementsByName("ingredients")[0].value)
-    Array.from(ul.children).forEach(x => document.getElementsByName("ingredients")[0].value += `${x.textContent}\n`);
-    console.log(document.getElementsByName("ingredients")[0].value)
-
-    
-    
-    
-    const [desc] = parent.getElementsByClassName("description");
-    const p = Array.from(desc.children);
-    p.shift();
-    p.forEach(x => document.getElementsByName("steps")[0].value += `${x.textContent}\n`);
-
-    const [currForm] = document.getElementById("edit").getElementsByTagName("form");
-
-    form = currForm;
-    document.getElementById("edit").addEventListener("submit", updateRecipe);
-}
-
-async function updateRecipe(event) {
-    let { img, ingredients, name, steps } = desirializeForm(form);
-    ingredients = ingredients.split("\r\n");
-    steps = steps.split("\r\n");
+async function updateRecipe(id, body) {
     try {
         const response = await fetch(`http://localhost:3030/data/recipes/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                "X-Authorization": sessionStorage.getItem("accessToken")
+                "X-Authorization": sessionStorage.getItem("userToken")
             },
-            body: JSON.stringify({ img, ingredients, steps, name })
+            body: JSON.stringify(body)
         });
+
 
         if (!response.ok) {
             displayMessage("Something went wrong...");
@@ -58,19 +23,49 @@ async function updateRecipe(event) {
 }
 
 
-let main;
-let section;
-let setNavActive;
+const editTemplate = (recipe) => html`
+<section id="create">
+    <article>
+        <h2>Edit Recipe</h2>
+        <form id="editForm">
+            <label>Name: <input type="text" name="name" placeholder="Recipe name" .value=${recipe.name}></label>
+            <label>Image: <input type="text" name="img" placeholder="Image URL" .value=${recipe.img}></label>
+            <label class="ml">Ingredients: <textarea name="ingredients"
+                    placeholder="Enter ingredients on separate lines"
+                    .value=${recipe.ingredients.join('\n')}></textarea></label>
+            <label class="ml">Preparation: <textarea name="steps"
+                    placeholder="Enter preparation steps on separate lines"
+                    .value=${recipe.steps.join('\n')}></textarea></label>
+            <input type="submit" value="Save Changes">
+        </form>
+    </article>
+</section>`;
 
-function initilizeEditComponent(targetParent, targetSection, onNavChange) {
-    main = targetParent;
-    section = targetSection;
-    setNavActive = onNavChange;
+
+let recipeId;
+export function setupEdit() {
+
+    return displayEdit;
+    async function displayEdit(context) {
+        recipeId = context.params.id;
+        const recipe = await getRecipeById(context.params.id);
+        return editTemplate(recipe);
+    }
 }
 
-function displayEdit() {
-    main.innerHTML = "";
-    main.appendChild(section);
-}
+export async function onEditSubmit(data, onSuccess) {
+    
+    const body = {
+        name: data.name,
+        img: data.img,
+        ingredients: data.ingredients.split("\n").map(l => l.trim()).filter(l => l !== ""),
+        steps: data.steps.split("\n").map(l => l.trim()).filter(l => l !== "")
+    };
 
-export { editRecipe, initilizeEditComponent, displayEdit };
+    try {
+        await updateRecipe(recipeId, body);
+        onSuccess(recipeId);
+    } catch (err) {
+        alert(err.message);
+    }
+}

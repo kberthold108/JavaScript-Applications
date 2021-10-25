@@ -1,11 +1,11 @@
-import { desirializeForm, displayMessage, changeNavigationState } from "../helpers.js";
-import { displayCatalog } from "../catalog.js";
-const loginURL = "http://localhost:3030/users/login";
+import { displayMessage, changeNavigationState } from "../helpers.js";
+import { html } from "https://unpkg.com/lit-html?module";
 
+const loginURL = "http://localhost:3030/users/login";
 async function login(url, body) {
     const response = await fetch(url, {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
     });
 
@@ -16,40 +16,42 @@ async function login(url, body) {
     }
 
     const data = await response.json();
-    sessionStorage.setItem("accessToken", data.accessToken);
-    sessionStorage.setItem("userID", data._id);
+    sessionStorage.setItem("userToken", data.accessToken);
+    sessionStorage.setItem("userId", data._id);
 
     changeNavigationState();
     return true;
 }
 
-async function onSubmit(event) {
-    event.preventDefault();
-    const success = await login(loginURL, desirializeForm(event.target));
+const loginTemplate = html`
+<section id="login">
+    <article>
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label>E-mail: <input type="text" name="email"></label>
+            <label>Password: <input type="password" name="password"></label>
+            <input type="submit" value="Login">
+        </form>
+    </article>
+</section>`;
 
-    if (success) {
-        displayCatalog();
+
+export function setupLogin() {
+    return displayLogin;
+    function displayLogin() {
+        return loginTemplate;
     }
 }
-
-let main;
-let section;
-let setNavActive;
-
-function initializeLoginComponent(targetParent, targetSection, onNavChange) {
-    main = targetParent;
-    section = targetSection;
-    setNavActive = onNavChange;
-
-    const form = section.querySelector("form");
-    form.addEventListener("submit", onSubmit);
+export async function onLoginSubmit(data, onSuccess) {
+    await login(loginURL, { email: data.email, password: data.password });
+    onSuccess();
+    
 }
 
-function displayLogin() {
-    setNavActive("loginLink");
-    main.innerHTML = "";
-    main.appendChild(section);
-}
 
-export { initializeLoginComponent, displayLogin, login };
+
+
+
+
+export { login };
 

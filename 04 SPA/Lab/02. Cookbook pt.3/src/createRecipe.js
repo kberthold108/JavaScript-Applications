@@ -1,52 +1,62 @@
-import { desirializeForm, displayMessage } from "./helpers.js";
-import { displayCatalog } from "./catalog.js";
+import { displayMessage } from "./helpers.js";
+import { html } from "https://unpkg.com/lit-html?module";
 
 const createURL = "http://localhost:3030/data/recipes";
 
-async function onSubmit(event) {
-    event.preventDefault();
-    await createRecipe(event.target);
-    displayCatalog();
+const createTemplate = html`
+<section id="create">
+    <article>
+        <h2>New Recipe</h2>
+        <form id="createForm">
+            <label>Name: <input type="text" name="name" placeholder="Recipe name"></label>
+            <label>Image: <input type="text" name="img" placeholder="Image URL"></label>
+            <label class="ml">Ingredients: <textarea name="ingredients"
+                    placeholder="Enter ingredients on separate lines"></textarea></label>
+            <label class="ml">Preparation: <textarea name="steps"
+                    placeholder="Enter preparation steps on separate lines"></textarea></label>
+            <input type="submit" value="Create Recipe">
+        </form>
+    </article>
+</section>`;
+
+
+
+export function setupCreate() {
+    return displayCreate;
+    function displayCreate() {
+        return createTemplate;
+    }
+}
+export async function onCreateSubmit(data, onSuccess) {
+    const body = {
+        name: data.name,
+        img: data.img,
+        ingredients: data.ingredients.split("\n").map(l => l.trim()).filter(l => l != ""),
+        steps: data.steps.split("\n").map(l => l.trim()).filter(l => l !== "")
+    };
+
+
+    const result = await createRecipe(body);
+    onSuccess(result._id);
 }
 
-async function createRecipe(form) {
-    let { img, ingredients, name, steps } = desirializeForm(form);
+async function createRecipe(body) {
 
-    ingredients = ingredients.split("\r\n");
-    steps = steps.split("\r\n");
     try {
         const response = await fetch(createURL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "X-Authorization": sessionStorage.getItem("accessToken")
+                "X-Authorization": sessionStorage.getItem("userToken")
             },
-            body: JSON.stringify({ img, ingredients, steps, name })
+            body: JSON.stringify(body)
         });
-
         if (!response.ok) {
             displayMessage("Something went wrong...");
         }
+        const data = await response.json();
+        return data;
     } catch (err) {
         displayMessage(err);
     }
 }
-
-let main;
-let section;
-let setNavActive;
-
-function initializeCreateComponent(targetParent, targetSection, onNavChange) {
-    main = targetParent;
-    section = targetSection;
-    setNavActive = onNavChange;
-    section.querySelector("form").addEventListener("submit", onSubmit);
-}
-
-function displayCreate() {
-    setNavActive("createLink");
-    main.innerHTML = "";
-    main.appendChild(section);
-}
-
-export { initializeCreateComponent, displayCreate };
